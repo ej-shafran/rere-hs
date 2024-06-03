@@ -1,0 +1,50 @@
+* rere-hs (*Re*cord *Re*play)
+
+  Based off of [[https://github.com/tsoding/rere.py][Tsoding's rere project]] -
+  see [[https://www.youtube.com/watch?v=32a52fOBDQY][YouTube video]].
+
+  This project uses [[https://docs.haskellstack.org/en/stable/][Stack]] and the
+  default template. The relevant files are in =src/Bi=
+  ([[https://github.com/tsoding/bi-format][bi format]] parsing and
+  stringifying) and =app/= (actual =rere= program).
+
+  *NOTE:* this is a toy project meant for me to practice programming skills,
+  and because I thought the idea of implementing BI in Haskell sounded fun and cool
+  (it was!). Don't take it seriously please. Yes I've done it in C as well and
+  I'm considering more - it's been very enjoyable thus far.
+
+** Quick Start
+
+   1. Create a file with a shell command line per line. Let's call it
+      [[./test.list][test.list]].
+
+   2. Record the expected behavior of each shell command:
+
+      #+begin_src bash
+      stack run record test.list
+      #+end_src
+
+      The above command should create [[./test.list.bi][test.list.bi]] snapshot
+      file with stdout, stderr and returncode captured as the expected
+      behavior. The file uses =bi= format, for more info see
+      [[#snapshot-schema][Snapshot Schema]].
+
+   3. Replay the command lines checking their behavior against the recorded one:
+
+      #+begin_src bash
+      stack run replay test.list
+      #+end_src
+
+** Snapshot Schema
+#+CUSTOM_ID: snapshot-schema
+
+   The snapshot file uses [[https://github.com/tsoding/bi-format][bi format]]. Its schema goes as following (the order of fields matters):
+
+   1. First comes an integer field =count= which denotes the amount of tests.
+
+   2. Then come the tests. Each test is a sequence of fields: 
+
+      - Blob field =shell= which contains the shell command to test,
+      - Integer field =code= which contains the expected exit code of the shell command,
+      - Blob field =stdout= which contains the bytes of the expected standard output,
+      - Blob field =stderr= which contains the bytes of the expected standard error output.

@@ -1,0 +1,57 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.36.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           rere-hs
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/ej-shafran/rere-hs#readme>
+homepage:       https://github.com/ej-shafran/rere-hs#readme
+bug-reports:    https://github.com/ej-shafran/rere-hs/issues
+author:         ej-shafran
+maintainer:     ejshafran@hilma.tech
+copyright:      2024 ej-shafran
+license:        BSD-3-Clause
+build-type:     Simple
+extra-source-files:
+    README.org
+
+source-repository head
+  type: git
+  location: https://github.com/ej-shafran/rere-hs
+
+library
+  exposed-modules:
+      Bi.Parser
+      Bi.Writer
+  other-modules:
+      Paths_rere_hs
+  autogen-modules:
+      Paths_rere_hs
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      base >=4.7 && <5
+    , directory
+    , parsec
+    , process
+  default-language: Haskell2010
+
+executable rere-hs-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_rere_hs
+  autogen-modules:
+      Paths_rere_hs
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , directory
+    , parsec
+    , process
+    , rere-hs
+  default-language: Haskell2010
