@@ -37,7 +37,7 @@ commandResultP = do
 savedFileP :: Parser [CommandResult]
 savedFileP = do
   amount <- intFieldP "count"
-  Text.Parsec.count amount commandResultP
+  count amount commandResultP
 
 diff :: CommandResult -> CommandResult -> String
 diff (CommandResult _ outA errA codeA) (CommandResult _ outB errB codeB)
@@ -106,7 +106,7 @@ logic ["replay"] = errorAndUsage "missing files"
 logic ("record" : files) = mapM_ recordFile files
 logic ("replay" : files) = mapM_ replayFile files
 logic (subcmd : _) = errorAndUsage $ "invalid subcommand " ++ subcmd
-logic [] = errorAndUsage "invalid subcommand (record|replay)"
+logic [] = errorAndUsage "missing subcommand"
 
 main :: IO ()
 main = getArgs >>= logic
